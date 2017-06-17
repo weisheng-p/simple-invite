@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <style>
+    .guest{
+      width: 50px;
+      padding-right: 0px;
+    }
+    .error {
+      border: 2px solid red;
+    }
+    .error-text{
+      color: red;
+    }
+    </style>
+  </head>
+  <body>
+    {% if updated and accepted %}
+    <div class="alert alert-success" role="alert">
+      <strong>Awesome!</strong> See you soon. You can still update your RSVP
+    </div>
+    {% endif %}
+    {% if updated and rejected %}
+    <div class="alert alert-info" role="alert">
+      Your RSVP has been recorded. You can still update your RSVP
+    </div>
+    {% endif %}
+
+    {% if errors %}
+    <div class="alert alert-danger" role="alert">
+      <strong>Oh snap!</strong> There are some error while updating your RSVP
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title">Hey {{invite.name}}</h4>
+          <p class="card-text">
+            <p>You are invited to this awesome event</p>
+            <p>Location: 221, Pineapple Road, Singapore 000000</p>
+            <p>Time: 9:00 AM</p>
+            {% if rsvped %}
+            <div class="alert alert-info" role="alert">
+              <p>You previously have recorded your RSVP. You can still update it</p>
+            </div>
+            {% endif %}
+            <form method="post">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="status" value="accepted" {%if accepted %}checked{% endif %}>
+                  I am coming with <input name="guest" type="number" class="{% if errors.guest%}error {% endif %}guest" value="{{invite.guest}}"></input> guest!
+                  {% if errors.guest %}
+                  <div class="error-text form-control-feedback">Number of guest {{errors.guest}}</div>
+                  {% endif %}
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="status" value="rejected" {%if rejected %}checked{% endif %}>
+                  I am not going.
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  </body>
+</html>
